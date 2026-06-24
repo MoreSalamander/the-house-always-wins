@@ -1,0 +1,237 @@
+{
+  "frame": 612,
+  "seed": 12345,
+  "run": 7,
+  "phase": "BLOW_WINDOW",
+  "odds": 0.78,
+  "signals": {
+    "crowd_noise": 0.58,
+    "window_open": true,
+    "window_start_s": 9.5,
+    "window_end_s": 11.0,
+    "tension": 0.82
+  },
+  "fighters": [
+    {
+      "id": "jack",
+      "name": "JACK",
+      "archetype": "BRAWLER",
+      "pos": [
+        560.0,
+        360.0
+      ],
+      "facing": 0.1,
+      "state": "ATTACKING",
+      "health": 0.62,
+      "stamina": 0.4,
+      "action": "heavy",
+      "decision": {
+        "choice": "heavy",
+        "confidence": 0.85,
+        "assessment": {
+          "distance": "CLOSE",
+          "target_stamina": "LOW",
+          "pattern": "JAB_HAPPY",
+          "opportunity": "TARGET_EXHAUSTED"
+        },
+        "why": "opening for the finish near the window"
+      }
+    },
+    {
+      "id": "bruno",
+      "name": "BRUNO",
+      "archetype": "BRAWLER",
+      "pos": [
+        640.0,
+        372.0
+      ],
+      "facing": 3.0,
+      "state": "STUNNED",
+      "health": 0.18,
+      "stamina": 0.55,
+      "action": null,
+      "decision": null
+    }
+  ],
+  "crew": [
+    {
+      "id": "echo",
+      "name": "ECHO",
+      "role": "HACKER",
+      "pos": [
+        1180.0,
+        80.0
+      ],
+      "state": "WORKING",
+      "zone": null,
+      "intent": "conduct: hold roar, cover descent",
+      "decision": {
+        "choice": "hold",
+        "confidence": 0.71,
+        "assessment": {
+          "roar": "0.58 rising",
+          "window": "OPEN",
+          "charge": "ARMED",
+          "blackout_clock": "1.6s left",
+          "surveillance": "CALM"
+        },
+        "why": "roar not peaked, charge ready, basement cam dark 2.4s \u2014 holding"
+      }
+    },
+    {
+      "id": "mara",
+      "name": "MARA",
+      "role": "SAFECRACKER",
+      "pos": [
+        1060.0,
+        620.0
+      ],
+      "state": "WORKING",
+      "zone": "VAULT",
+      "intent": "arm + wait for roar",
+      "decision": {
+        "choice": "wait",
+        "confidence": 0.69,
+        "assessment": {
+          "charge": "ARMED",
+          "cover": "cam dark",
+          "guard_g1": "CALM"
+        },
+        "why": "armed, holding for Echo's blow call"
+      }
+    },
+    {
+      "id": "rico",
+      "name": "RICO",
+      "role": "DRIVER",
+      "pos": [
+        1280.0,
+        540.0
+      ],
+      "state": "WAITING",
+      "zone": null,
+      "intent": "idle at dock, engine warm",
+      "decision": null
+    }
+  ],
+  "guards": [
+    {
+      "id": "g1",
+      "kind": "FLOOR",
+      "pos": [
+        1040.0,
+        600.0
+      ],
+      "facing": 3.3,
+      "vision": {
+        "angle": 0.6,
+        "range": 260.0
+      },
+      "alert": 0.12,
+      "alert_state": "CALM",
+      "heard_boom": false,
+      "feed_suspicion": 0.0
+    },
+    {
+      "id": "sv",
+      "kind": "SURVEILLANCE",
+      "pos": [
+        980.0,
+        640.0
+      ],
+      "facing": 0.0,
+      "vision": null,
+      "alert": 0.2,
+      "alert_state": "CALM",
+      "heard_boom": false,
+      "feed_suspicion": 0.2
+    }
+  ],
+  "cameras": [
+    {
+      "id": "cam_floor",
+      "name": "CASINO FLOOR",
+      "zone": "CASINO",
+      "pos": [
+        900.0,
+        360.0
+      ],
+      "facing": 1.57,
+      "state": "LIVE",
+      "dark_elapsed_s": 0.0
+    },
+    {
+      "id": "cam_hall",
+      "name": "EMPLOYEE HALL",
+      "zone": "HALLWAY",
+      "pos": [
+        1000.0,
+        460.0
+      ],
+      "facing": 1.57,
+      "state": "LIVE",
+      "dark_elapsed_s": 0.0
+    },
+    {
+      "id": "cam_vault",
+      "name": "VAULT APPROACH",
+      "zone": "VAULT",
+      "pos": [
+        1040.0,
+        600.0
+      ],
+      "facing": 0.0,
+      "state": "DARK",
+      "dark_elapsed_s": 2.4
+    }
+  ],
+  "security": {
+    "alarm_state": "RISING",
+    "blackout_limit_s": 4.0,
+    "dark_count": 1,
+    "nearest_trip_s": 1.6
+  },
+  "vault": {
+    "pos": [
+      1060.0,
+      640.0
+    ],
+    "charge_progress": 1.0,
+    "armed": true,
+    "blown": false,
+    "blow_frame": null,
+    "boom_loudness": 0.7,
+    "masked": null,
+    "loot": 0.0
+  },
+  "escape": {
+    "truck_at_dock": true,
+    "loot_loaded": 0.0,
+    "rolling": false,
+    "clear": false
+  },
+  "memory": {
+    "run": 7,
+    "last_failure": "run 6: blew at 598 \u2014 boom 0.70 > noise 0.49, g1 heard it",
+    "window_shift_s": 0.4,
+    "best_outcome": "ESCAPE"
+  },
+  "events": [
+    {
+      "kind": "BIG_HIT",
+      "actor": "jack",
+      "payload": {
+        "loudness": 0.58
+      }
+    },
+    {
+      "kind": "BLACKOUT_WARNING",
+      "actor": "cam_vault",
+      "payload": {
+        "trip_in_s": 1.6
+      }
+    }
+  ],
+  "v": 1,
+  "time_s": 10.2
+}

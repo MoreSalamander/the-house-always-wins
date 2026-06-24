@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The House Always Wins — a cinematic AI heist you watch, not play</title>
+<meta name="description" content="Six AI crew autonomously rob a casino — a staged fight's crowd roar masks the vault explosion. Every decision is the AI's; a deterministic core keeps the house's edge. Watch it, don't play it." />
+<style>
+  :root {
+    --bg: #0b0a0e; --panel: #15121a; --line: #2a2330; --ink: #ece6e0; --dim: #9a8f86;
+    --gold: #d9b25f; --red: #e0556b; --green: #5bbf8f; --blue: #6fa8d4;
+    --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans);
+         line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 22px 110px; }
+
+  header { padding: 84px 0 38px; border-bottom: 1px solid var(--line);
+           background: radial-gradient(120% 80% at 50% -10%, rgba(217,178,95,.08), transparent 60%); }
+  .kicker { font-family: var(--mono); font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 16px; }
+  h1 { font-size: 50px; line-height: 1.04; margin: 0 0 18px; letter-spacing: -1px; font-weight: 800; }
+  .lede { font-size: 19px; color: var(--dim); max-width: 680px; }
+  .lede strong { color: var(--ink); font-weight: 600; }
+  .tagline { font-family: var(--mono); color: var(--gold); font-size: 14px; letter-spacing: 1px; margin-top: 20px; }
+
+  h2 { font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin: 60px 0 6px; }
+  .h2sub { font-size: 26px; font-weight: 700; margin: 0 0 18px; letter-spacing: -.5px; }
+  p { margin: 0 0 16px; }
+  .muted { color: var(--dim); }
+  em { color: var(--ink); font-style: normal; border-bottom: 1px dashed var(--dim); }
+
+  .callout { border-left: 3px solid var(--gold); background: rgba(217,178,95,.06);
+             border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 22px 0; font-size: 16px; }
+  .callout strong { color: var(--ink); }
+  .callout.danger { border-left-color: var(--red); background: rgba(224,85,107,.07); }
+
+  .roar { border: 1px solid var(--line); border-radius: 16px; padding: 26px 26px; margin: 24px 0;
+          background: linear-gradient(180deg, rgba(224,85,107,.06), rgba(217,178,95,.04)); }
+  .roar .vs { font-family: var(--mono); font-size: 13px; color: var(--dim); display: flex;
+              justify-content: center; gap: 18px; align-items: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .roar .vs b { color: var(--ink); } .roar .vs .crowd { color: var(--gold); } .roar .vs .boom { color: var(--red); }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; }
+  th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-family: var(--mono); font-size: 11px; letter-spacing: .5px; text-transform: uppercase; color: var(--dim); }
+  td .name { font-family: var(--mono); color: var(--gold); }
+  td .role { color: var(--blue); }
+
+  ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 18px 0; }
+  ol.steps li { position: relative; padding: 12px 0 12px 46px; border-top: 1px solid var(--line); }
+  ol.steps li:first-child { border-top: none; }
+  ol.steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: 12px;
+    font-family: var(--mono); font-size: 13px; color: var(--gold); border: 1px solid var(--line);
+    border-radius: 8px; width: 30px; height: 30px; display: grid; place-items: center; }
+  ol.steps b { color: var(--ink); }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0; }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } h1 { font-size: 36px; } }
+  .card { border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; background: var(--panel); }
+  .card h4 { margin: 0 0 6px; font-size: 16px; }
+  .card p { font-size: 14px; color: var(--dim); margin: 0; }
+
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; margin: 22px 0; }
+  .stat { font-family: var(--mono); font-size: 13px; color: var(--dim); line-height: 2; }
+  .stat b { color: var(--ink); }
+  .stat .done { color: var(--green); } .stat .next { color: var(--gold); }
+  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line);
+           font-family: var(--mono); font-size: 12px; color: var(--dim); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">A MoreSalamander · StudioLabs production</div>
+  <h1>The House<br>Always Wins</h1>
+  <p class="lede">Six AI crew autonomously rob a casino — and the casino tries to stop them. Every
+  decision is the AI's; you don't control anyone. <strong>You watch.</strong> They can win or lose, and
+  the house always keeps its edge — so no run is guaranteed.</p>
+  <div class="tagline">A cinematic AI heist you watch, not play.</div>
+</header>
+
+<h2>What it is</h2>
+<div class="h2sub">A heist that runs itself.</div>
+<p>You don't move anyone. You witness a crew of six AI characters break into a casino while the casino's
+guards, cameras, and milling crowd react — every plan, every close call, every moment a single guard
+glancing the wrong way blows the whole thing. When a run goes wrong it starts over, and you watch the crew
+try again: a <em>montage of attempts</em> converging on a clean score.</p>
+<div class="callout">
+  <strong>Hit backtick on any run</strong> to peel the film back to the debug overlay — every agent's
+  perception, decision, and confidence. The "AI" isn't a black box; it's a conductor's console you can read,
+  frame by frame.
+</div>
+
+<h2>The signature beat</h2>
+<div class="h2sub">The roar has to be louder than the boom.</div>
+<p>The heart of the heist: in the arena, a <em>staged pit fight</em> draws a roaring crowd. Deep in the
+secure core, the explosives expert blows the vault. The whole job lives or dies on one question of
+timing — at the instant the charge goes off, is the crowd loud enough to swallow it?</p>
+<div class="roar">
+  <div class="vs">
+    <span class="crowd">▁▃▅▇█ CROWD ROAR</span> <b>vs.</b> <span class="boom">VAULT CHARGE 💥</span>
+  </div>
+  <p class="muted" style="text-align:center;margin:8px 0 0;font-size:13.5px">
+    roar &gt; boom → the city hears a fight &nbsp;·&nbsp; boom &gt; roar → the alarm, and the run is over
+  </p>
+</div>
+<p>It's the title rendered as a mechanic. The crew can stack the odds — time the charge to the fight's peak,
+cut the outside phone line so a late noise rings only inside — but they can never make it certain. The
+house keeps its edge.</p>
+
+<h2>The crew</h2>
+<div class="h2sub">Six specialists, one window.</div>
+<table>
+  <tr><th>Name</th><th>Role</th><th>Job</th></tr>
+  <tr><td><span class="name">CELESTE</span></td><td><span class="role">Conductor / hacker</span></td><td>Taps the security camera feeds, then guides the crew through, back, or around</td></tr>
+  <tr><td><span class="name">SABLE</span></td><td><span class="role">Safecracker</span></td><td>Reaches the vault and cracks it</td></tr>
+  <tr><td><span class="name">DORIAN</span></td><td><span class="role">Explosives</span></td><td>Follows SABLE to the vault, one at a time</td></tr>
+  <tr><td><span class="name">AUGUSTE &amp; ROMAN</span></td><td><span class="role">The fighters</span></td><td>The staged fight — the crowd they draw is the cover</td></tr>
+  <tr><td><span class="name">MARLOWE</span></td><td><span class="role">Driver</span></td><td>Waits at the truck on the dock — the way out</td></tr>
+</table>
+
+<h2>How a heist unfolds</h2>
+<div class="h2sub">Walk in as guests; leave as ghosts.</div>
+<ol class="steps">
+  <li><b>Walk in and blend.</b> The crew enter as guests and disperse across the public floor — fighters to the ring, SABLE to the casino, DORIAN to the arena crowd, CELESTE to the bar. They hold, doing nothing suspicious.</li>
+  <li><b>CELESTE gets the eyes.</b> She slips into the utility closet beside the security office, drills the shared wall, and taps the camera feeds. Now she sees what the house sees.</li>
+  <li><b>One by one, on her signal.</b> With the feeds live, she releases the infiltrators — SABLE first, then DORIAN once SABLE reaches the vault — timing each move to the guards' gaps.</li>
+  <li><b>CELESTE conducts.</b> On the feeds she calls it: reroute around a sightline, hold at the edge until a patrol sweeps past, or fall back when a guard closes in.</li>
+  <li><b>The score — or the alarm.</b> They reach the vault and the getaway truck. But if a guard ever <em>sees</em> an infiltrator where they shouldn't be, it's over — restart, and try again.</li>
+</ol>
+
+<h2>The rules that make it tense</h2>
+<div class="h2sub">No health bar. Caught is caught.</div>
+<div class="grid">
+  <div class="card"><h4>Blend in public</h4><p>On the public floor the crew are just guests — guards and cameras don't faze them. The danger only begins past the service wall.</p></div>
+  <div class="card"><h4>Getting seen is a fail</h4><p>In the back-of-house and secure core, one guard sighting (or an uncovered camera) ends the run. No slow meter — caught is caught.</p></div>
+  <div class="card"><h4>Sneaking is real</h4><p>The crew never step into a vision cone in a secure area. They wait for it to sweep past, route around it, or back off; gates open only when a guard steps away on break.</p></div>
+  <div class="card"><h4>The montage</h4><p>Each attempt plays differently. Caught → restart → try again, until a run threads the needle. You're watching a crew learn the building.</p></div>
+</div>
+
+<h2>The idea underneath</h2>
+<div class="h2sub">The brain proposes; the rules dispose.</div>
+<p>The House Always Wins is an instance of the MoreSalamander <em>Deterministic Scaffold</em> thesis. The
+AI <strong>proposes</strong> — each crew member reasons about where to go, which route is safest, when to
+move. A deterministic core <strong>disposes</strong> — who can see whom, when a gate is open, whether a
+sighting is a fail are exact, seed-locked, and identical every run. The brain is the player; the scaffold
+is the referee. Two things follow:</p>
+<div class="grid">
+  <div class="card"><h4>It's legible</h4><p>Every decision is exposed in the thinking panel, so you can always answer <em>why</em> — why SABLE held, why CELESTE rerouted DORIAN, why the run failed.</p></div>
+  <div class="card"><h4>It's honest</h4><p>The house genuinely keeps its edge. The crew get better at reading the building across attempts, but the math never lets them win every time. The tension lives in that gap.</p></div>
+</div>
+
+<h2>Where it stands</h2>
+<div class="panel stat">
+  <div><span class="done">✓ built</span> &nbsp;the single-floor casino as canonical geometry, watchable on a 2D god's-eye bench</div>
+  <div><span class="done">✓ built</span> &nbsp;the full cast — crew, patrolling &amp; posted guards, cameras, staff, a casino's worth of customers</div>
+  <div><span class="done">✓ built</span> &nbsp;real perception — vision cones + line-of-sight; walls and furniture block sight</div>
+  <div><span class="done">✓ built</span> &nbsp;blend-and-stage, the console tap, sequential release, CELESTE conducting, getting-seen-is-a-fail + the restart montage</div>
+  <div><span class="next">→ next</span> &nbsp;<b>the roar</b> (boom vs. crowd), SABLE's vault crack &amp; the loot-and-escape, the cut outside line, an odds board, the cinematic <b>3D</b> layer</div>
+  <div class="muted" style="margin-top:10px">a deterministic, seed-locked brain · all test suites green · every frame auditable</div>
+</div>
+
+<footer>
+  The House Always Wins — a MoreSalamander · StudioLabs production.
+  <br>The house always wins — until the night it doesn't.
+</footer>
+
+</div>
+</body>
+</html>

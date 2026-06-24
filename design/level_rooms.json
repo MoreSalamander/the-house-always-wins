@@ -1,0 +1,54 @@
+{
+  "meta": { "note": "semantic layer for the single-floor map — rooms, key points, heist placements. Matches design/levelmaps.js (84x54)." },
+  "floors": {
+    "floor1": {
+      "label": "The House",
+      "rooms": {
+        "arena":           { "rect": [1, 25, 24, 28],  "center": [12, 40] },
+        "casino":          { "rect": [59, 25, 24, 28], "center": [70, 40] },
+        "bar":             { "rect": [26, 33, 32, 11], "center": [40, 38] },
+        "lobby":           { "rect": [26, 44, 32, 9],  "center": [40, 48] },
+        "cage":            { "rect": [60, 26, 13, 6],  "center": [66, 28] },
+        "kitchen":         { "rect": [26, 25, 32, 7],  "center": [41, 28] },
+        "security_office": { "rect": [2, 16, 16, 7],   "center": [9, 19] },
+        "utility_closet":  { "rect": [17, 16, 8, 7],   "center": [20, 19] },
+        "break_room":      { "rect": [24, 16, 12, 7],  "center": [29, 19] },
+        "managers_office": { "rect": [38, 16, 14, 7],  "center": [44, 19] },
+        "counting_room":   { "rect": [66, 16, 16, 7],  "center": [73, 19] },
+        "staff_restroom":  { "rect": [57, 16, 4, 5],   "center": [58, 18] },
+        "janitor_closet":  { "rect": [62, 16, 4, 5],   "center": [63, 18] },
+        "loading_dock":    { "rect": [1, 1, 13, 13],   "center": [7, 7] },
+        "safety_deposit":  { "rect": [16, 2, 18, 10],  "center": [24, 6] },
+        "vault":           { "rect": [33, 2, 20, 10],  "center": [43, 6] },
+        "server_room":     { "rect": [52, 2, 19, 10],  "center": [61, 6] },
+        "mechanical":      { "rect": [70, 2, 13, 10],  "center": [76, 6] }
+      },
+      "points": {
+        "entrance":          [40, 52],
+        "service_doors":     [[12, 24], [30, 24], [53, 24], [70, 24]],
+        "checkpoint":        [53, 15],
+        "checkpoint_hold":   [53, 18],
+        "security_door":     [20, 22],
+        "security_hold":     [20, 23],
+        "truck_door":        [7, 0]
+      }
+    }
+  },
+  "heist": {
+    "fight":        { "floor": "floor1", "room": "arena",           "pos": [10, 38] },
+    "crowd":        { "floor": "floor1", "room": "arena" },
+    "driver":       { "floor": "floor1", "room": "loading_dock",    "pos": [7, 9] },
+    "mara_start":   { "floor": "floor1", "room": "lobby",           "pos": [40, 50] },
+    "mara_goal":    { "floor": "floor1", "room": "vault",           "pos": [43, 6] },
+    "echo_stage1":  { "floor": "floor1", "room": "utility_closet", "pos": [19, 19],
+                      "job": "drill the shared wall and tap the security room's camera feeds; run the blackouts" },
+    "echo_stage2":  { "floor": "floor1", "room": "server_room",     "pos": [63, 7],
+                      "job": "cut the outside line so a trip rings only inside" },
+    "gates": {
+      "checkpoint": { "tile": [53, 15], "hold": [53, 18], "guard": "G-VAULT",
+                      "note": "the secure-core checkpoint — SABLE waits for G-VAULT's gap" },
+      "security":   { "tile": [20, 22], "hold": [20, 23], "guard": "G-SEC",
+                      "note": "the utility-closet door — CELESTE waits for G-SEC's gap (monitors unwatched)" }
+    }
+  }
+}

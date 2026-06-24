@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>THE HOUSE — Floor Plans</title>
+<style>
+  :root{ --cyan:#5fb6d6; --ink:#cfe8f5; --dim:#6b8494; --wall:#5aa6c4;
+         --gold:#e0b85c; --green:#67c97a; --amber:#e6b84c; --red:#d44c48;
+         --bg:#0a0e14; --panel:#0f161e; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink);
+        font-family:"Menlo",Consolas,monospace; }
+  header{ padding:18px 26px 6px; }
+  header h1{ margin:0; font-size:17px; letter-spacing:3px; color:var(--gold); }
+  header p{ margin:4px 0 0; font-size:12px; color:var(--dim); letter-spacing:1px; }
+  .wrap{ display:flex; gap:20px; padding:14px 26px 30px; align-items:flex-start;
+         flex-wrap:wrap; }
+  svg{ background:linear-gradient(#0c121a,#0a0e14);
+       border:1px solid #1b2a36; border-radius:8px; }
+  .room{ fill:#111b24; stroke:var(--wall); stroke-width:2.5; }
+  .room.arena{ fill:#1a1410; }
+  .room.casino{ fill:#170f14; }
+  .room.cash{ fill:#15140d; }
+  .room.hall{ fill:#0e1820; stroke:#3a5a68; stroke-dasharray:none; }
+  .room.dock{ fill:#10141a; stroke:#3a5060; }
+  .grid{ stroke:#16222c; stroke-width:1; }
+  .gtxt{ fill:#39505c; font-size:9px; }
+  .rlabel{ fill:var(--ink); font-size:14px; font-weight:bold; letter-spacing:2px; }
+  .rsub{ fill:var(--dim); font-size:10px; letter-spacing:1px; }
+  .compass{ fill:#5d7a8a; font-size:11px; letter-spacing:2px; }
+  .door{ stroke:var(--gold); stroke-width:5; }
+  .route{ stroke:var(--amber); stroke-width:2.5; fill:none; stroke-dasharray:7 6;
+          marker-end:url(#aa); }
+  .actor{ font-size:11px; }
+  .q{ fill:var(--red); font-size:13px; font-weight:bold; }
+  .qring{ fill:none; stroke:var(--red); stroke-width:1.5; stroke-dasharray:4 4; }
+  .panel{ width:320px; background:var(--panel); border:1px solid #1b2a36;
+          border-radius:8px; padding:16px 18px; }
+  .panel h2{ font-size:12px; letter-spacing:2px; margin:0 0 10px; color:var(--cyan); }
+  .panel h3{ font-size:11px; letter-spacing:1px; color:var(--gold); margin:18px 0 6px; }
+  .leg{ font-size:12px; line-height:1.7; color:#9fc3cf; }
+  .q-item{ font-size:12px; line-height:1.55; color:#e6c9c9; margin:0 0 12px;
+           padding-left:14px; border-left:2px solid var(--red); }
+  .ok{ font-size:12px; line-height:1.5; color:#9fd6aa; margin:0 0 8px;
+       padding-left:14px; border-left:2px solid var(--green); }
+  .note{ font-size:11px; color:var(--dim); line-height:1.5; margin-top:14px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>THE HOUSE ALWAYS WINS — FLOOR PLANS</h1>
+  <p>main floor · to scale from Unreal (X 0–5000 west→east, Y 0–3500 north→south)</p>
+</header>
+
+<div class="wrap">
+<svg width="760" height="600" viewBox="0 0 760 600">
+  <defs>
+    <marker id="aa" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#e6b84c"/></marker>
+    <marker id="ag" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#67c97a"/></marker>
+  </defs>
+
+  <text x="30" y="34" class="rlabel" style="fill:#e0b85c;letter-spacing:3px">MAIN FLOOR</text>
+  <text x="700" y="34" class="compass">N ↑ (back)</text>
+
+  <!-- mapping: sx = 40 + X*0.13 ; sy = 60 + Y*0.13  (building 5000 x 3500) -->
+  <!-- grid every 500 UE units -->
+  <g class="grid">
+    <line x1="105" y1="60" x2="105" y2="515"/><line x1="170" y1="60" x2="170" y2="515"/>
+    <line x1="235" y1="60" x2="235" y2="515"/><line x1="300" y1="60" x2="300" y2="515"/>
+    <line x1="365" y1="60" x2="365" y2="515"/><line x1="430" y1="60" x2="430" y2="515"/>
+    <line x1="495" y1="60" x2="495" y2="515"/><line x1="560" y1="60" x2="560" y2="515"/>
+    <line x1="625" y1="60" x2="625" y2="515"/>
+    <line x1="40" y1="125" x2="690" y2="125"/><line x1="40" y1="190" x2="690" y2="190"/>
+    <line x1="40" y1="255" x2="690" y2="255"/><line x1="40" y1="320" x2="690" y2="320"/>
+    <line x1="40" y1="385" x2="690" y2="385"/><line x1="40" y1="450" x2="690" y2="450"/>
+  </g>
+  <text x="36" y="56" class="gtxt">0</text>
+  <text x="668" y="56" class="gtxt">5000 (X)</text>
+  <text x="14" y="514" class="gtxt">3500</text>
+  <text x="20" y="64" class="gtxt">0 (Y)</text>
+
+  <!-- LOADING DOCK: truck bay just outside the back wall, back-left -->
+  <rect class="room dock" x="58" y="26" width="150" height="30"/>
+  <text x="66" y="45" class="rsub" style="fill:#9fb4c0;font-weight:bold">LOADING DOCK ▸ truck / RICO</text>
+  <line class="door" x1="110" y1="60" x2="156" y2="60"/>
+
+  <!-- ACCESS HALLWAY: full width across the back -->
+  <rect class="room hall" x="40" y="60" width="650" height="34"/>
+  <text x="50" y="81" class="rsub" style="fill:#7da0b0;letter-spacing:3px">A C C E S S   H A L L W A Y   ·   staff spine</text>
+
+  <!-- ARENA: left, below the hallway -->
+  <rect class="room arena" x="40" y="94" width="195" height="421"/>
+  <text x="70" y="290" class="rlabel">THE ARENA</text>
+  <text x="70" y="306" class="rsub">the staged fight</text>
+  <text x="95" y="335" class="actor" fill="#e0b85c">● JACK</text>
+  <text x="95" y="352" class="actor" fill="#d44c48">● BRUNO</text>
+  <text x="62" y="382" class="rsub" style="fill:#7a6a4a">— crowd / the roar —</text>
+
+  <!-- BAR: center, below hallway -->
+  <rect class="room" x="235" y="94" width="260" height="291"/>
+  <text x="300" y="230" class="rlabel">THE BAR</text>
+  <text x="300" y="246" class="rsub">lounge / restaurant</text>
+
+  <!-- LOBBY: center-front -->
+  <rect class="room" x="235" y="385" width="260" height="130"/>
+  <text x="300" y="450" class="rlabel">LOBBY</text>
+  <text x="300" y="466" class="rsub">main entrance</text>
+
+  <!-- CAGE: back-right, below hallway, behind the casino -->
+  <rect class="room cash" x="495" y="94" width="195" height="66"/>
+  <text x="540" y="124" class="rlabel">THE CAGE</text>
+  <text x="540" y="138" class="rsub">cash handling</text>
+
+  <!-- CASINO: front-right -->
+  <rect class="room casino" x="495" y="160" width="195" height="355"/>
+  <text x="520" y="320" class="rlabel">CASINO</text>
+  <text x="520" y="338" class="rlabel">FLOOR</text>
+  <text x="520" y="354" class="rsub">slots · tables</text>
+
+  <!-- front doors -->
+  <line class="door" x1="320" y1="515" x2="410" y2="515"/>
+  <text x="318" y="535" class="rsub" style="fill:#e0b85c">▲ FRONT DOORS (south)</text>
+
+  <!-- cash flow: casino -> cage -> hallway -> dock/elevator -->
+  <path d="M 592,300 L 592,164" stroke="#67c97a" stroke-width="2.5" fill="none"
+        marker-end="url(#ag)" opacity=".8"/>
+  <text x="600" y="240" class="rsub" style="fill:#67c97a">cash ↑</text>
+
+  <!-- cargo elevator: tentative, on the hallway near the cage -->
+  <rect x="600" y="63" width="74" height="28" fill="none" stroke="#d44c48"
+        stroke-width="1.5" stroke-dasharray="4 4"/>
+  <text x="606" y="81" class="q" style="font-size:11px">ELEV ?</text>
+
+  <!-- MARA route: doors -> lobby -> up -> staff door into hallway -> elevator -->
+  <path class="route" d="M 380,515 L 380,470 L 430,440 L 430,120 L 470,100 L 600,80"/>
+  <text x="395" y="500" class="actor" fill="#e0b85c">● MARA</text>
+</svg>
+
+<div class="panel">
+  <h2>THE SHAPE</h2>
+  <div class="leg">
+    <b style="color:#7da0b0">ACCESS HALLWAY</b> runs the full width
+    across the back — the staff spine. Everything back-of-house
+    hangs off it.<br><br>
+    <b style="color:#e6b84c">LEFT</b> — THE ARENA.<br>
+    <b style="color:#e6b84c">CENTER</b> — LOBBY (front) → BAR.<br>
+    <b style="color:#e6b84c">RIGHT</b> — CASINO FLOOR, with THE
+    CAGE behind it.<br><br>
+    <b style="color:#9fb4c0">LOADING DOCK</b> — a truck bay just
+    outside the back wall (back-left), opening onto the hallway.
+  </div>
+
+  <h3>CHECK THIS ✓?</h3>
+  <p class="ok"><b>Dock = a rear truck bay</b> outside the back
+     wall, where the truck reverses in. Is that the "above the
+     hallway" you meant — or should the dock be an interior
+     room?</p>
+
+  <h3>STILL TO PLACE</h3>
+  <p class="q-item"><b>Cargo elevator.</b> Tentatively on the
+     hallway by the cage (back-right). Cash goes casino → cage →
+     hallway → elevator (down to vault) and → dock (out). Confirm
+     the spot?</p>
+  <p class="q-item"><b>MARA's staff door.</b> Amber route shows
+     her slipping from the floor into the hallway — where exactly
+     is that door, and which camera covers it?</p>
+
+  <p class="note">To scale from your Unreal coordinates. Once the
+     shape is locked I'll give you the exact UE wall cubes for the
+     hallway + dock. Refresh to see changes.</p>
+</div>
+</div>
+</body>
+</html>

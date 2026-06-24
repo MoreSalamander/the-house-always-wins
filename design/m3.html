@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>THE HOUSE — M3 Perception Demo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  html,body,#root{ min-height:100%; margin:0; background:#0e0e16; }
+  #err{ color:#ff8888; font-family:Menlo,monospace; font-size:13px;
+        white-space:pre-wrap; padding:20px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<pre id="err"></pre>
+<script>
+// Load the m3 perception demo, strip module syntax, transpile in the browser.
+(async () => {
+  try {
+    const src = await (await fetch('./m3-perception-demo.jsx?' + Date.now())).text();
+    let code = src
+      .replace(/^\s*import[^\n]*\n/gm, '')
+      .replace('export default function M3Demo', 'function M3Demo');
+    code =
+      'const {useState, useEffect, useRef} = React;\n' +
+      code +
+      '\nReactDOM.createRoot(document.getElementById("root"))' +
+      '.render(React.createElement(M3Demo));';
+    const out = Babel.transform(code, { presets: ['react'] }).code;
+    const s = document.createElement('script');
+    s.textContent = out;
+    document.body.appendChild(s);
+  } catch (e) {
+    document.getElementById('err').textContent =
+      'Failed to load m3-perception-demo.jsx:\n' + (e && e.stack || e);
+  }
+})();
+</script>
+</body>
+</html>
