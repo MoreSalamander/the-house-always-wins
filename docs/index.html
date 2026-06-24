@@ -39,6 +39,10 @@
   .callout strong { color: var(--ink); }
   .callout.danger { border-left-color: var(--red); background: rgba(224,85,107,.07); }
 
+  figure { margin: 26px 0; }
+  figure img { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 12px; }
+  figcaption { font-family: var(--mono); font-size: 11.5px; color: var(--dim); margin-top: 10px; text-align: center; line-height: 1.5; }
+
   .roar { border: 1px solid var(--line); border-radius: 16px; padding: 26px 26px; margin: 24px 0;
           background: linear-gradient(180deg, rgba(224,85,107,.06), rgba(217,178,95,.04)); }
   .roar .vs { font-family: var(--mono); font-size: 13px; color: var(--dim); display: flex;
@@ -96,6 +100,13 @@ try again: a <em>montage of attempts</em> converging on a clean score.</p>
   perception, decision, and confidence. The "AI" isn't a black box; it's a conductor's console you can read,
   frame by frame.
 </div>
+
+<figure>
+  <img src="bench.png" alt="The 2D debug bench: a god's-eye view of the whole casino floor with guard vision cones, cameras, the crew, and a live thinking panel reading each agent's perception and decision." />
+  <figcaption>The 2D debug bench — the whole floor at a glance: guard vision cones, cameras, the crew,
+  the staged-fight crowd in the arena, and on the right, every agent's live thinking, the alarm meter,
+  and the run state. The conductor's console.</figcaption>
+</figure>
 
 <h2>The signature beat</h2>
 <div class="h2sub">The roar has to be louder than the boom.</div>
