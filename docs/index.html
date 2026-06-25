@@ -75,6 +75,28 @@
   .stat .done { color: var(--green); } .stat .next { color: var(--gold); }
   footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line);
            font-family: var(--mono); font-size: 12px; color: var(--dim); }
+  /* runner */
+  .hg{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin:22px 0;}
+  .hg-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+  .hg-bar .t{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--dim);}
+  .hg-frame{font-family:var(--mono);font-size:12px;color:var(--dim);} .hg-frame b{color:var(--gold);}
+  .hg-track{display:flex;flex-wrap:wrap;align-items:stretch;}
+  .hg-s{flex:1;min-width:84px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.02);padding:10px 7px;text-align:center;transition:all .3s;}
+  .hg-s .n{font-family:var(--mono);font-size:11px;color:var(--dim);transition:color .3s;}
+  .hg-s .g{font-family:var(--mono);font-size:9.5px;color:#5a5040;margin-top:3px;height:12px;}
+  .hg-s.on{border-color:var(--gold);background:rgba(217,178,95,.10);box-shadow:0 0 20px -7px var(--gold);} .hg-s.on .n{color:var(--ink);}
+  .hg-s.ok{border-color:var(--green);} .hg-s.ok .g{color:var(--green);}
+  .hg-s.no{border-color:var(--red);background:rgba(224,85,107,.10);} .hg-s.no .g{color:var(--red);} .hg-s.no .n{color:#f0b8c0;}
+  .hg-a{display:flex;align-items:center;color:#46402e;font-size:13px;padding:0 3px;}
+  .hg-mw{margin-top:16px;font-family:var(--mono);font-size:11.5px;color:var(--dim);}
+  .hg-meter{position:relative;height:12px;background:#0d0b10;border:1px solid var(--line);border-radius:7px;overflow:hidden;margin-top:14px;}
+  .hg-roar{height:100%;width:0;background:var(--gold);transition:width .8s ease;}
+  .hg-boom{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--red);}
+  .hg-boom::after{content:'boom';position:absolute;top:-14px;left:-11px;font-size:9px;color:var(--red);}
+  .hg-con{margin-top:16px;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:9px;padding:11px 14px;font-family:var(--mono);font-size:11.5px;line-height:1.8;height:110px;overflow:hidden;}
+  .hg-con .l{white-space:nowrap;color:var(--dim);} .hg-con .k{color:var(--blue);} .hg-con .ok{color:var(--green);} .hg-con .no{color:var(--red);} .hg-con .dn{color:var(--gold);}
+  .hg-cap{font-size:12px;color:var(--dim);margin-top:12px;line-height:1.5;}
+  @media(max-width:640px){.hg-a{display:none;} .hg-s{min-width:44%;}}
 </style>
 </head>
 <body>
@@ -140,6 +162,23 @@ timing — at the instant the charge goes off, is the crowd loud enough to swall
 cut the outside phone line so a late noise rings only inside — but they can never make it certain. The
 house keeps its edge.</p>
 
+<h2>Watch the brain decide</h2>
+<div class="h2sub">Per frame: assess → propose → verify → commit. The roar has to win.</div>
+<div class="hg" id="hg">
+  <div class="hg-bar"><span class="t">deterministic brain · frame loop</span><span class="hg-frame">frame <b id="hgf">2014</b></span></div>
+  <div class="hg-track">
+    <div class="hg-s" data-s="assess"><div class="n">assess</div><div class="g"></div></div><div class="hg-a">→</div>
+    <div class="hg-s" data-s="propose"><div class="n">propose</div><div class="g"></div></div><div class="hg-a">→</div>
+    <div class="hg-s" data-s="verify"><div class="n">verify</div><div class="g">●</div></div><div class="hg-a">→</div>
+    <div class="hg-s" data-s="commit"><div class="n">commit</div><div class="g"></div></div>
+  </div>
+  <div class="hg-mw">crowd roar vs. vault boom<div class="hg-meter"><div class="hg-roar" id="hgroar"></div><div class="hg-boom" style="left:82%"></div></div></div>
+  <div class="hg-con" id="hgcon"></div>
+  <div class="hg-cap">The signature mechanic, inside the loop: the charge fires only if the <strong>crowd roar
+  is louder than the boom</strong> at that instant. Too early and the brain holds for the fight's peak — fire
+  into a quiet room and it's the alarm.</div>
+</div>
+
 <h2>The crew</h2>
 <div class="h2sub">Six specialists, one window.</div>
 <table>
@@ -198,5 +237,34 @@ is the referee. Two things follow:</p>
 </footer>
 
 </div>
+<script>
+(function(){
+  const ss=[...document.querySelectorAll('.hg-s')], by=id=>ss.find(s=>s.dataset.s===id);
+  const con=document.getElementById('hgcon'), fr=document.getElementById('hgf'), roar=document.getElementById('hgroar');
+  if(!con) return;
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const F=reduced?0.12:1;
+  function clr(){ss.forEach(s=>s.classList.remove('on','ok','no'));}
+  function log(t,c){const l=document.createElement('div');l.className='l';l.innerHTML=t;if(c)l.className='l '+c;con.appendChild(l);while(con.children.length>5)con.removeChild(con.firstChild);}
+  async function step(id,note){clr();by(id).classList.add('on');log('<span class="k">'+id+'</span> '+note);await sleep(640*F);}
+  async function verify(ok,note){clr();const e=by('verify');e.classList.add('on');log('<span class="k">verify</span> boom vs roar');await sleep(620*F);e.classList.remove('on');e.classList.add(ok?'ok':'no');e.querySelector('.g').textContent=ok?'masked ✓':'caught ✕';log(note,ok?'ok':'no');await sleep(820*F);}
+  function reset(f){con.innerHTML='';clr();by('verify').querySelector('.g').textContent='●';by('commit').querySelector('.g').textContent='';fr.textContent=f;}
+  async function loop(){while(true){
+    reset(2014);roar.style.width='0';await sleep(500*F);
+    await step('assess','crowd roar 74 — fight building');roar.style.width='74%';
+    await step('propose','DORIAN: blow the vault charge?');
+    await verify(false,'boom 82 > roar 74 → CAUGHT');
+    log('hold ↺ wait for the fight’s peak','no');await sleep(1200*F);
+    reset(2061);roar.style.width='74%';await sleep(420*F);
+    await step('assess','crowd at the fight’s peak');roar.style.width='91%';
+    await step('propose','DORIAN: blow the vault charge');
+    await verify(true,'boom 82 < roar 91 → masked');
+    clr();by('commit').classList.add('on','ok');by('commit').querySelector('.g').textContent='✓ breached';
+    log('<span class="dn">commit</span> vault breached · no alarm','dn');await sleep(3400*F);
+  }}
+  loop();
+})();
+</script>
 </body>
 </html>
